@@ -1,8 +1,9 @@
 @echo off
 
 echo BEGIN LOG... %date% %time% > %~dp0\log.srr
-set Version=1.11.0
-echo Running version %version%... >> %~dp0\log.srr
+set Version=1.12.0
+set GitVersion=1.1.0
+echo Running local version %version%, and Github version %GitVersion%... >> %~dp0\log.srr
 :root
 net session
 if %errorlevel% equ 0 (echo Admin rights detected. >> %~dp0\log.srr) else (echo Admin rights denied. >> %~dp0\log.srr)
@@ -56,10 +57,7 @@ echo  Please wait a moment... Searching for "%FileName%" on "%Location%"
 echo Searching for Java via jre64.exe... %time% >> %~dp0\log.srr
 timeout /t 3 /nobreak > NUL
 cls
-if exist "%Location%\%FileName%" ( color 0A & echo Java has successfully been installed! & echo Found Java! Continuing... %time% >> %~dp0\log.srr & echo Installed Java to %Location% at %time% >> %~dp0\log.srr & pause
-) else (
-    Color 0C & echo Java is not installed! Please re-run this program and try again! & echo Java was rejected or installed elsewhere... %time% >> %~dp0\log.srr & pause & exit
-)
+if exist "%Location%\%FileName%" (color 0A & echo Java has successfully been installed! & echo Found Java! Continuing... %time% >> %~dp0\log.srr & echo Installed Java to %Location% at %time% >> %~dp0\log.srr & pause) else (color 0C & echo Java is not installed! Please re-run this program and try again! & echo Java was rejected or installed elsewhere... %time% >> %~dp0\log.srr & pause & exit)
 
 ##This is where the user is directed if/when they have an existing copy of Java.
 :preexist
@@ -81,7 +79,7 @@ java -jar forge-1.16.5-36.1.0-installer.jar > NUL
 
 echo FORGE PROFILE CHECK
 cls
-echo  Please wait a moment...  Searching for "%FileName%" on "%Location%"
+echo  Please wait a moment...  Searching for Forge 1.16.5 Forge profile...
 echo Searching for Forge profile... %time% >> %~dp0\log.srr
 timeout /t 3 /nobreak > NUL
 cls
@@ -100,7 +98,7 @@ set fjFileName="1.16.5-forge-36.1.0.jar"
 echo  Please wait a moment... Searching for a pre-existing Forge library file...
 echo Checking for a pre-existing Forge library file... %time% >> %~dp0\log.srr
 timeout /t 3 /nobreak > NUL
-if exist "%fjLocation%\%fjFilename%" (color 0A & echo  A Forge 1.16.5 library is already installed on this computer! & echo Found a pre-existing Forge 1.16.5 library! Continuing... %time% >> %~dp0\log.srr & echo Pre-existing Forge 1.16.5 library is at %fjLocation%... %time% >> %~dp0\log.srr & pause & goto modins) else (goto fjins)
+if exist "%fjLocation%\%fjFilename%" (color 0A & echo  A Forge 1.16.5 library is already installed on this computer! & echo Found a pre-existing Forge 1.16.5 library! Continuing... %time% >> %~dp0\log.srr & echo Pre-existing Forge 1.16.5 library is at %fjLocation%... %time% >> %~dp0\log.srr & pause & goto modins) else (echo No pre-existing Forge 1.16.5 library found. >> %~dp0\log.srr & goto fjins)
 
 :fjins
 echo FORGE JAR INSTALL
