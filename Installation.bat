@@ -1,7 +1,7 @@
 @echo off
 
 echo BEGIN LOG... %date% %time% > %~dp0\log.srr
-set Version=1.10.6
+set Version=1.11.0
 echo Running version %version%... >> %~dp0\log.srr
 :root
 net session
@@ -45,7 +45,7 @@ if %errorlevel% EQU 1 echo Choice returned a value of 1 (Accept) %time% >> %~dp0
 echo Installing Java (required)...
 timeout 3
 echo Installing Java... %time% >> %~dp0\log.srr
-cd %~dp0
+cd %~dp0/java
 jre64.exe
 
 ##This is basically the first Java check, but only after the user has installed Java from the script.
@@ -76,7 +76,7 @@ if exist "%fpLocation%\%fpFileName%" ( color 0A & echo The Forge launcher profil
 :fpins
 echo In the next popup window, please click OK. & pause
 echo Installing Forge profile... %time% >> %~dp0\log.srr
-cd %~dp0
+cd %~dp0/forge
 java -jar forge-1.16.5-36.1.0-installer.jar > NUL
 
 echo FORGE PROFILE CHECK
@@ -107,7 +107,7 @@ echo FORGE JAR INSTALL
 color 0B & cls
 echo Copying Forge .jar... & timeout /t 3 /nobreak > NUL
 echo Copying Forge .jar... %time% >> %~dp0\log.srr
-copy "%~dp0\1.16.5-forge-36.1.0.jar" "%AppData%\.minecraft\versions\1.16.5-forge-36.1.0" > NUL
+copy "%~dp0\forge\1.16.5-forge-36.1.0.jar" "%AppData%\.minecraft\versions\1.16.5-forge-36.1.0" > NUL
 
 echo FORGE JAR CHECK
 set Location=%AppData%\.minecraft\versions\1.16.5-forge-36.1.0
@@ -127,7 +127,7 @@ if exist "%Location%\%FileName%" ( color 0A & echo Forge has successfully been i
 :modins
 echo --- >> %~dp0\log.srr
 echo MODS COPY
-del /q "%~dp0\forge-1.16.5-36.1.0-installer.jar.log"
+del /q "%~dp0\forge\forge-1.16.5-36.1.0-installer.jar.log"
 color 0B & cls
 echo Copying mods...
 timeout /t 3 /nobreak > NUL
